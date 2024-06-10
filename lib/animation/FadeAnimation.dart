@@ -21,10 +21,15 @@ class _FadeAnimationState extends State<FadeAnimation>
     _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 500),
-      delay: Duration(milliseconds: (widget.delay * 1000).toInt()), // Delay in milliseconds
     );
     _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
-    _controller.forward();
+
+    // Start the animation after the specified delay
+    Future.delayed(Duration(milliseconds: (widget.delay * 1000).toInt()), () {
+      if (mounted) {
+        _controller.forward();
+      }
+    });
   }
 
   @override
